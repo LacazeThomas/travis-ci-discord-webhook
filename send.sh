@@ -6,25 +6,17 @@ fi
 
 echo -e "[Webhook]: Sending webhook to Discord...\\n";
 
-case $1 in
-  "success" )
+if [ "$TRAVIS_TEST_RESULT" == "0" ]
+then
     EMBED_COLOR=3066993
     STATUS_MESSAGE="Passed"
     AVATAR="https://travis-ci.org/images/logos/TravisCI-Mascot-blue.png"
-    ;;
-
-  "failure" )
+else
+  "failure" 
     EMBED_COLOR=15158332
     STATUS_MESSAGE="Failed"
     AVATAR="https://travis-ci.org/images/logos/TravisCI-Mascot-red.png"
-    ;;
-
-  * )
-    EMBED_COLOR=0
-    STATUS_MESSAGE="Status Unknown"
-    AVATAR="https://travis-ci.org/images/logos/TravisCI-Mascot-1.png"
-    ;;
-esac
+fi
 
 AUTHOR_NAME="$(git log -1 "$TRAVIS_COMMIT" --pretty="%aN")"
 COMMITTER_NAME="$(git log -1 "$TRAVIS_COMMIT" --pretty="%cN")"
